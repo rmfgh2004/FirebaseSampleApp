@@ -54,9 +54,15 @@ class SignUpFragment : Fragment() {
             if (isSignUp) {
                 Toast.makeText(context, "success signUp", Toast.LENGTH_SHORT).show()
                 mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, false, null)
-            } else {
-                Toast.makeText(context, "fail signUp", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        viewModel.emailError.observe(viewLifecycleOwner) { error ->
+            binding.textLayoutSignupId.error = error
+        }
+
+        viewModel.passwordError.observe(viewLifecycleOwner) { error ->
+            binding.textLayoutSignupPw.error = error
         }
     }
 }
