@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.firebasesampleapp.R
 import com.example.firebasesampleapp.databinding.FragmentLoginBinding
@@ -37,7 +38,10 @@ class LoginFragment : Fragment() {
     private fun setListener() {
 
         binding.buttonLoginLogin.setOnClickListener {
-
+            viewModel.login(
+                binding.editTextLoginId.text.toString(),
+                binding.editTextLoginPw.text.toString(),
+            )
         }
 
         binding.buttonLoginSignup.setOnClickListener {
@@ -46,7 +50,21 @@ class LoginFragment : Fragment() {
     }
 
     private fun observe() {
+        viewModel.isSignIn.observe(viewLifecycleOwner) { isSignIn ->
+            if (isSignIn) {
+                Toast.makeText(context, "success login", Toast.LENGTH_SHORT).show()
+                mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, false, null)
+            }
+            // replace Home
+        }
 
+        viewModel.emailError.observe(viewLifecycleOwner) { error ->
+            binding.textLayoutLoginId.error = error
+        }
+
+        viewModel.passwordError.observe(viewLifecycleOwner) { error ->
+            binding.textLayoutLoginPw.error = error
+        }
     }
 
 }

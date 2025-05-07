@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         newFragment = when(name) {
             LOGIN_FRAGMENT -> LoginFragment()
             SIGNUP_FRAGMENT -> SignUpFragment()
+            HOME_FRAGMENT -> Fragment()
             else -> Fragment()
         }
 
@@ -73,5 +74,6 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "askask"
         const val LOGIN_FRAGMENT = "LoginFragment"
         const val SIGNUP_FRAGMENT = "SignUpFragment"
+        const val HOME_FRAGMENT = "HomeFragment"
     }
 }
