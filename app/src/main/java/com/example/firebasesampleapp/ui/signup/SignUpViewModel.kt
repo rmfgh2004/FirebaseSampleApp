@@ -3,10 +3,13 @@ package com.example.firebasesampleapp.ui.signup
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.example.firebasesampleapp.model.User
 import com.example.firebasesampleapp.repository.UserRepository
 import com.example.firebasesampleapp.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
 
 class SignUpViewModel : ViewModel() {
 
@@ -22,10 +25,10 @@ class SignUpViewModel : ViewModel() {
 
         userRepository.signup(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                isSignUp.value = true
                 val currentUser = userRepository.getCurrentUser()
                 if (currentUser != null) {
                     Log.d(MainActivity.TAG, "email : ${currentUser.email}")
+                    insertUser(currentUser)
                 }
             } else {
                 isSignUp.value = false
@@ -65,6 +68,25 @@ class SignUpViewModel : ViewModel() {
 
 
         return true
+    }
+
+    private fun insertUser(currentUser: FirebaseUser) {
+
+        val user = User(
+            currentUser.uid,
+            currentUser.email!!,
+        )
+
+        userRepository.insertUser(
+            user = user,
+            onSuccess = {
+                isSignUp.value = true
+            },
+            onFailure = { exception ->
+                isSignUp.value = false
+                Log.d(MainActivity.TAG, "${exception.message}")
+            },
+        )
     }
 
 }
