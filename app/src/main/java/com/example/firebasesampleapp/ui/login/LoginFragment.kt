@@ -54,6 +54,7 @@ class LoginFragment : Fragment() {
             if (isSignIn) {
                 Toast.makeText(context, "success login", Toast.LENGTH_SHORT).show()
                 mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, false, null)
+                mainActivity.bottomNavigation(true)
             }
             // replace Home
         }

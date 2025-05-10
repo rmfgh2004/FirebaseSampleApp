@@ -1,6 +1,7 @@
 package com.example.firebasesampleapp.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,6 +28,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         replaceFragment(LOGIN_FRAGMENT, false, null)
+        setListener()
+        bottomNavigation(false)
+    }
+
+    private fun setListener() {
+
+        binding.bottomNavigationViewMain.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.menu_1 -> replaceFragment(HOME_FRAGMENT, false, null)
+                R.id.menu_2 -> replaceFragment(HOME_FRAGMENT, false, null)
+                R.id.menu_3 -> replaceFragment(HOME_FRAGMENT, false, null)
+                R.id.menu_myPage -> replaceFragment(MYPAGE_FRAGMENT, false, null)
+            }
+
+            true
+        }
+
+    }
+
+    fun bottomNavigation(isView: Boolean) {
+        binding.bottomNavigationViewMain.visibility = if(isView) View.VISIBLE else View.GONE
     }
 
     fun replaceFragment(name: String, addToBackStack: Boolean, bundle: Bundle?) {
@@ -43,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         newFragment = when(name) {
             LOGIN_FRAGMENT -> LoginFragment()
             SIGNUP_FRAGMENT -> SignUpFragment()
+            MYPAGE_FRAGMENT -> Fragment()
             HOME_FRAGMENT -> Fragment()
             else -> Fragment()
         }
@@ -75,5 +98,6 @@ class MainActivity : AppCompatActivity() {
         const val LOGIN_FRAGMENT = "LoginFragment"
         const val SIGNUP_FRAGMENT = "SignUpFragment"
         const val HOME_FRAGMENT = "HomeFragment"
+        const val MYPAGE_FRAGMENT = "MyPageFragment"
     }
 }
