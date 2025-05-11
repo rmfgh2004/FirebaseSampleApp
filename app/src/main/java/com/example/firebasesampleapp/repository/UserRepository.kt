@@ -35,10 +35,20 @@ class UserRepository {
         return auth.currentUser
     }
 
-    // user firestore
-    fun insertUser(user: User, onSuccess: () -> Unit, onFailure: (exception: Throwable) -> Unit): LiveData<Result<String>> {
+    fun findByUid(uid: String, onResult: (User?) -> Unit){
+        db.collection("users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+                val user = doc.toObject(User::class.java)
+                onResult(user)
+            }.addOnFailureListener {
+                onResult(null)
+            }
+    }
 
-        val result = MutableLiveData<Result<String>>()
+    // user firestore
+    fun insertUser(user: User, onSuccess: () -> Unit, onFailure: (exception: Throwable) -> Unit){
 
         db.collection("users")
             .document(user.uid)
@@ -48,8 +58,17 @@ class UserRepository {
             }.addOnFailureListener { exception ->
                 onFailure(exception)
             }
+    }
 
-        return result
+    companion object {
+        private var instance: UserRepository? = null
+
+        fun INSTANCE() : UserRepository {
+            if (instance == null) {
+                instance = UserRepository()
+            }
+            return instance!!
+        }
     }
 
 }
