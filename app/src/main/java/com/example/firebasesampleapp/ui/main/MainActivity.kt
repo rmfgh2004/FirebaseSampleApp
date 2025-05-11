@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.firebasesampleapp.R
 import com.example.firebasesampleapp.databinding.ActivityMainBinding
 import com.example.firebasesampleapp.ui.login.LoginFragment
+import com.example.firebasesampleapp.ui.mypage.MyPageFragment
 import com.example.firebasesampleapp.ui.signup.SignUpFragment
 import com.google.android.material.transition.MaterialSharedAxis
 
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         newFragment = when(name) {
             LOGIN_FRAGMENT -> LoginFragment()
             SIGNUP_FRAGMENT -> SignUpFragment()
-            MYPAGE_FRAGMENT -> Fragment()
+            MYPAGE_FRAGMENT -> MyPageFragment()
             HOME_FRAGMENT -> Fragment()
             else -> Fragment()
         }

@@ -24,12 +24,12 @@ class LoginViewModel : ViewModel() {
         userRepository.login(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
 
-                val currentUser = userRepository.getCurrentUser()
+                val currentUser = task.result.user
                 if (currentUser != null) {
-                    isSignIn.value = true
                     userRepository.findByUid(currentUser.uid) {
                         _user.value = it
                     }
+                    isSignIn.value = true
                 } else {
                     isSignIn.value = false
                     emailError.value = "currentUser is null"

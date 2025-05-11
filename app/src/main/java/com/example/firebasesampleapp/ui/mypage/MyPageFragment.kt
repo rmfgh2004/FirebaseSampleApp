@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -91,6 +92,7 @@ class MyPageFragment : Fragment() {
 
     private fun observe() {
         loginViewModel.user.observe(viewLifecycleOwner) { user ->
+            Log.d("askask", "user observe")
             if (user.photoUrl != null) {
                 Glide.with(this)
                     .load(user.photoUrl.toUri())
@@ -112,7 +114,4 @@ class MyPageFragment : Fragment() {
         }
     }
 
-    companion object {
-        const val REQUEST_PERMISSIONS_CODE = 100
-    }
 }
