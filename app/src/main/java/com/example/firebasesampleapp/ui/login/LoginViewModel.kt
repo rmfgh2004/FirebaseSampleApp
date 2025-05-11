@@ -62,4 +62,8 @@ class LoginViewModel : ViewModel() {
         return true
     }
 
+    fun updateUser(newUser: User) {
+        _user.value = newUser
+    }
+
 }
